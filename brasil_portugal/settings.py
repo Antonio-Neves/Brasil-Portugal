@@ -11,7 +11,10 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+from django.contrib.messages import constants
+from decouple import config
 
+# ----------------------------------------------------------
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -19,28 +22,59 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
+# ----------------------------------------------------------
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-q5e3k(f1rh%vw&&hq(0o2qk*p&*+zmmkl1%e(*5=(8qm*!dveo'
+SECRET_KEY = config('SECRET_KEY')
 
+# ----------------------------------------------------------
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = []
+# ----------------------------------------------------------
+# Allowed Hosts
+# --- development --- #
+if DEBUG:
+	ALLOWED_HOSTS = []
+
+# --- Production --- #
+if not DEBUG:
+	ALLOWED_HOSTS = [config('ALLOWED_HOSTS')]
 
 
+# ----------------------------------------------------------
+# SSL and Cookies
+# ----- Production ----- #
+if not DEBUG:
+	SECURE_SSL_REDIRECT = True
+	ADMINS = [(config('SUPER_USER'), config('EMAIL'))]
+	SESSION_COOKIE_SECURE = True
+	CSRF_COOKIE_SECURE = True
+
+
+# ----------------------------------------------------------
 # Application definition
 
 INSTALLED_APPS = [
+	# --- Accounts --- #
+	'accounts',
+
+	# --- Django Apps --- #
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+	# --- My Apps ---#
+	'base',
+	'principal',
 ]
 
+# ----------------------------------------------------------
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+	'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -49,8 +83,10 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+# ----------------------------------------------------------
 ROOT_URLCONF = 'brasil_portugal.urls'
 
+# ----------------------------------------------------------
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -67,9 +103,11 @@ TEMPLATES = [
     },
 ]
 
+# ----------------------------------------------------------
 WSGI_APPLICATION = 'brasil_portugal.wsgi.application'
 
 
+# ----------------------------------------------------------
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
@@ -80,7 +118,47 @@ DATABASES = {
     }
 }
 
+# --- PostgreSQL Development and production with db data--- #
+# DATABASES = {
+# 		'default': {
+# 			'ENGINE': 'django.db.backends.postgresql',
+# 			'NAME': config('NAME_DB'),
+# 			'USER': config('USER_DB'),
+# 			'PASSWORD': config('PASSWORD_DB'),
+# 			'HOST': config('HOST_DB'),
+# 			'PORT': config('PORT_DB'),
+# 		}
+# 	}
 
+
+# --- PostgreSQL in Heroku--- #
+# --- Development --- #
+if DEBUG:
+	DATABASES = {
+		'default': {
+			'ENGINE': 'django.db.backends.postgresql',
+			'NAME': config('NAME_DB'),
+			'USER': config('USER_DB'),
+			'PASSWORD': config('PASSWORD_DB'),
+			'HOST': config('HOST_DB'),
+			'PORT': config('PORT_DB'),
+		}
+	}
+
+# --- Prodution --- #
+if not DEBUG:
+	import dj_database_url
+
+	DATABASES = {
+		'default': dj_database_url.config(
+			conn_max_age=600,
+			ssl_require=True
+		)
+	}
+
+
+
+# ----------------------------------------------------------
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
@@ -103,9 +181,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'pt-br'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Sao_Paulo'
 
 USE_I18N = True
 
@@ -114,11 +192,66 @@ USE_L10N = True
 USE_TZ = True
 
 
+# ----------------------------------------------------------
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.2/howto/static-files/
+# https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+MEDIA_URL = 'media/'
 
+# --- development --- #
+if DEBUG:
+	STATIC_ROOT = BASE_DIR / 'static'
+	MEDIA_ROOT = BASE_DIR / 'media'
+
+# --- Production --- #
+if not DEBUG:
+	# STATIC_ROOT = config('STATIC_ROOT')
+	# MEDIA_ROOT = config('MEDIA_ROOT')
+
+	# --- For Heroku --- #
+	STATIC_ROOT = BASE_DIR / 'staticfiles'
+	MEDIA_ROOT = BASE_DIR / 'mediafiles'
+
+# ----------------------------------------------------------
+# --- Email --- #
+
+# --- development --- #
+if DEBUG:
+	EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# --- Production --- #
+# if not DEBUG:
+# 	EMAIL_HOST = config('EMAIL_HOST')
+# 	EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+# 	EMAIL_PORT = config('EMAIL_PORT', cast=int)
+# 	EMAIL_USER_SSL = True
+# 	EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+# 	DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL')
+
+
+# ----------------------------------------------------------
+# --- Custom User Model --- #
+AUTH_USER_MODEL = 'accounts.CustomUser'
+
+# ----------------------------------------------------------
+# --- Login Logout User --- #
+# LOGIN_URL = 'login'
+# LOGIN_REDIRECT_URL = 'index-manager'
+# LOGOUT_REDIRECT_URL = 'index'
+
+# ----------------------------------------------------------
+# Mensagens
+MESSAGE_TAGS = {
+	constants.ERROR: 'alert-danger',
+	constants.WARNING: 'alert-warning',
+	constants.DEBUG: 'alert-info',
+	constants.SUCCESS: 'alert-success',
+	constants.INFO: 'alert-info',
+}
+
+
+# ----------------------------------------------------------
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
