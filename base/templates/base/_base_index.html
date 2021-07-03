@@ -1,0 +1,14 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <title>{% block title %}{% endblock %}</title>
+    {% include 'base/_base_head.html' %}
+</head>
+<body>
+    <!-- Content -->
+    {% block body_content %}{% endblock %}
+    <!-- Scripts -->
+    {% include 'base/_base_script.html' %}
+</body>
+</html>
