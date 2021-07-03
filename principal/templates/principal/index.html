@@ -1,10 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Home</title>
-</head>
-<body>
-    <h1>Deus</h1>
-</body>
-</html>
+{% extends 'base/_base_index.html' %}
+{% block title %}Inicio{% endblock %}
+{% block body_content %}
+<header>
+    <!-- Nav -->
+    {% include 'base/_base_nav_index.html' %}
+    <!-- Main content -->
+    <div class="home">
+        <div class="container principal-container">
+            <div class="row justify-content-md-center">
+                <div class="col-xl-3 col-principal">
+                    <a href="/">Gestão</a>
+                </div>
+                <div class="col-xl-3 col-principal">
+                    <a href="/">Escolar</a>
+                </div>
+                <div class="col-xl-3 col-principal">
+                    <a href="/">Gestão Escolar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- Footer -->
+{% include 'base/_base_footer.html' %}
+{% endblock %}
