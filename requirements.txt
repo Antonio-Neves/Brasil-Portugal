@@ -1,5 +1,6 @@
 asgiref==3.2.10
 Django==3.1.2
+django-cleanup==5.2.0
 # dj-database-url 0.5.0 for db credentials in Heroku
 dj-database-url==0.5.0
 django-summernote==0.8.11.6
