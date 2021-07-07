@@ -44,11 +44,25 @@ class UserManager(BaseUserManager):
 
 class CustomUser(AbstractUser):
 
+	DEPARTMENT_CHOICES = (
+		('ad', 'Administration'),
+		('ed', 'Edition'),
+		('su', 'Subscription'),
+	)
+
 	email = models.EmailField('Email', unique=True)
 	is_staff = models.BooleanField('Team member', default=True)
+	department = models.CharField(
+		'Department', max_length=2, default='su', choices=DEPARTMENT_CHOICES
+	)
 
 	USERNAME_FIELD = 'email'
-	REQUIRED_FIELDS = ['first_name', 'last_name']
+	REQUIRED_FIELDS = ['first_name', 'last_name', 'department']
+
+	class Meta:
+		verbose_name = 'User'
+		verbose_name_plural = 'Users'
+		ordering = ['first_name']
 
 	def __str__(self):
 		return self.email
