@@ -3,6 +3,7 @@ from django.views.generic import TemplateView
 
 from principal.models import Category
 
+
 class IndexView(TemplateView):
 
 	def get(self, request, *args, **kwargs):
