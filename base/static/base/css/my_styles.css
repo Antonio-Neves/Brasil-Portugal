@@ -36,7 +36,7 @@ header {
     text-align: center;
     text-shadow: 1px 1px 2px black;
     font-size: 1.5rem;
-    border-radius: 10px;
+    border-radius: 5px;
     font-family: Quicksand, sans-serif;
     color: rgba(255, 255, 200, 1);
     box-shadow: 2px 2px 5px black;
@@ -104,6 +104,23 @@ header {
 
 .logo {
     height: 50px;
+}
+
+/*****************************/
+/* Forms                     */
+/*****************************/
+
+.errorlist {
+    color: red;
+}
+
+.back02 {
+    /* background: rgba(16, 45, 105, .1); */
+    /* background: rgba(0, 0, 0, .2); */
+    margin-top: 2%;
+    margin-bottom: 2%;
+    padding: 2%;
+    border-radius: 10px;
 }
 
 
