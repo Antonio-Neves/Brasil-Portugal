@@ -117,7 +117,7 @@ a:focus {
 #sidebar ul li a {
     font-family: Quicksand, sans-serif;
     padding: 10px;
-    font-size: 1.1em;
+    font-size: 1.2em;
     display: block;
 }
 
@@ -130,6 +130,15 @@ a:focus {
 a[aria-expanded="true"] {
     color: #fff;
     /*background: #6d7fcc;*/
+}
+
+.submenu-list li a {
+    font-size: 1.1em !important;
+}
+
+.submenu2-list li a {
+    padding-left: 60px !important;
+    font-size: .9em !important;
 }
 
 a[data-toggle="collapse"] {
