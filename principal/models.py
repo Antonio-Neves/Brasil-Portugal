@@ -8,7 +8,7 @@ class BaseModel(models.Model):
 
 class Category(BaseModel):
 	category_id = models.AutoField(primary_key=True)
-	category_name = models.CharField('Category', max_length=100)
+	category_name = models.CharField('Category', max_length=100, unique=True)
 
 	class Meta:
 		verbose_name = 'Category'
@@ -24,7 +24,9 @@ class SubCategory(BaseModel):
 	sub_category_category = models.ForeignKey(
 		Category, related_name='subcategorycategory', on_delete=models.CASCADE
 	)
-	sub_category_name = models.CharField('Sub Category', max_length=100)
+	sub_category_name = models.CharField(
+		'Sub Category', max_length=100, unique=True
+	)
 
 	class Meta:
 		verbose_name = 'Subcategory'
@@ -45,7 +47,7 @@ class Article(BaseModel):
 	article_id = models.AutoField(primary_key=True)
 	article_cat = models.ForeignKey(
 		SubCategory, related_name='articlesubcategory', on_delete=models.CASCADE)
-	article_name = models.CharField('Name', max_length=100)
+	article_name = models.CharField('Name', max_length=100, unique=True)
 	article_slug = models.SlugField(max_length=150, unique=True)
 	article_content = models.TextField()
 	article_status = models.CharField(
