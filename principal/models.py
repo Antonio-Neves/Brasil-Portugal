@@ -13,7 +13,7 @@ class Category(BaseModel):
 	class Meta:
 		verbose_name = 'Category'
 		verbose_name_plural = 'Categories'
-		ordering = ['-category_name']
+		ordering = ['category_name']
 
 	def __str__(self):
 		return self.category_name
@@ -29,7 +29,7 @@ class SubCategory(BaseModel):
 	class Meta:
 		verbose_name = 'Subcategory'
 		verbose_name_plural = 'Subcategories'
-		ordering = ['-sub_category_name']
+		ordering = ['sub_category_name']
 
 	def __str__(self):
 		return self.sub_category_name
@@ -55,5 +55,7 @@ class Article(BaseModel):
 	class Meta:
 		verbose_name = 'Article'
 		verbose_name_plural = 'Articles'
+		ordering = ['article_name']
 
-
+	def __str__(self):
+		return self.article_name

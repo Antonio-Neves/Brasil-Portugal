@@ -1,9 +1,16 @@
 from django.shortcuts import render
+from django.views.generic import TemplateView
 
+from principal.models import Category
 
-def index(request):
+class IndexView(TemplateView):
 
-	return render(request, 'principal/index.html', {})
+	def get(self, request, *args, **kwargs):
+		context = {'categories': Category.objects.all()}
+
+		print(context)
+
+		return render(request, 'principal/index.html', context)
 
 
 def content(request):

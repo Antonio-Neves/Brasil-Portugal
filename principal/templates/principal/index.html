@@ -8,15 +8,17 @@
     <div class="home">
         <div class="container principal-container">
             <div class="row justify-content-md-center">
+                {% for category in categories %}
                 <div class="col-xl-3 col-principal">
-                    <a href="{% url 'content' %}">Vistos</a>
+                    <a href="{% url 'content' %}">{{ category }}</a>
                 </div>
-                <div class="col-xl-3 col-principal">
-                    <a href="{% url 'content' %}">Documentos</a>
-                </div>
-                <div class="col-xl-3 col-principal">
-                    <a href="{% url 'content' %}">Transporte</a>
-                </div>
+                {% endfor %}
+{#                <div class="col-xl-3 col-principal">#}
+{#                    <a href="{% url 'content' %}">Documentos</a>#}
+{#                </div>#}
+{#                <div class="col-xl-3 col-principal">#}
+{#                    <a href="{% url 'content' %}">Transporte</a>#}
+{#                </div>#}
             </div>
         </div>
     </div>
