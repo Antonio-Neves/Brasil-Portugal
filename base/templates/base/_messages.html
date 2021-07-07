@@ -1,0 +1,19 @@
+<div class="container">
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert {{ message.tags }}" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+    {% if form.errors %}
+        <div class="alert alert-danger" role="alert">
+            <h6>Erro ao cadastrar, confira os campos do formulário</h6>
+        </div>
+    {% endif %}
+    {% if form.non_field_errors %}
+        <div class="alert alert-danger" role="alert">
+            {{ form.non_field_errors }}
+        </div>
+    {% endif %}
+</div>
