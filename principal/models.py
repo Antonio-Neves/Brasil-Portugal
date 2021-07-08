@@ -9,6 +9,7 @@ class BaseModel(models.Model):
 class Category(BaseModel):
 	category_id = models.AutoField(primary_key=True)
 	category_name = models.CharField('Category', max_length=100, unique=True)
+	category_slug = models.SlugField(max_length=150, unique=True)
 
 	class Meta:
 		verbose_name = 'Category'
@@ -27,6 +28,7 @@ class SubCategory(BaseModel):
 	sub_category_name = models.CharField(
 		'Sub Category', max_length=100, unique=True
 	)
+	sub_category_slug = models.SlugField(max_length=150, unique=True)
 
 	class Meta:
 		verbose_name = 'Subcategory'
