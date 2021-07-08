@@ -8,9 +8,9 @@
     <div class="home">
         <div class="container principal-container">
             <div class="row justify-content-md-center">
-                {% for category in categories %}
+                {% for global_category in global_categories %}
                 <div class="col-xl-3 col-principal">
-                    <a href="{% url 'content' %}">{{ category }}</a>
+                    <a href="{% url 'content' %}">{{ global_category }}</a>
                 </div>
                 {% endfor %}
 {#                <div class="col-xl-3 col-principal">#}
