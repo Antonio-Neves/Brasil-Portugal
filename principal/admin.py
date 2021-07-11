@@ -16,6 +16,7 @@ class ArticleAdmin(SummernoteModelAdmin):
 	list_display = ['article_name', 'article_cat', 'article_status']
 	list_filter = ('article_cat', 'article_status')
 	search_fields = ['article_name']
+	radio_fields = {'article_status': admin.VERTICAL}
 	prepopulated_fields = {'article_slug': ('article_name',)}
 	summernote_fields = ('article_content',)
 
