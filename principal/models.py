@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 
 class BaseModel(models.Model):
@@ -15,6 +16,9 @@ class Category(BaseModel):
 		verbose_name = 'Category'
 		verbose_name_plural = 'Categories'
 		ordering = ['category_name']
+
+	def get_absolute_url(self):
+		return reverse('category-detail', args=[self.category_slug])
 
 	def __str__(self):
 		return self.category_name
@@ -34,6 +38,9 @@ class SubCategory(BaseModel):
 		verbose_name = 'Subcategory'
 		verbose_name_plural = 'Subcategories'
 		ordering = ['sub_category_name']
+
+	def get_absolute_url(self):
+		return reverse('subcategory-detail', args=[self.sub_category_slug])
 
 	def __str__(self):
 		return self.sub_category_name
@@ -60,6 +67,9 @@ class Article(BaseModel):
 		verbose_name = 'Article'
 		verbose_name_plural = 'Articles'
 		ordering = ['article_name']
+
+	def get_absolute_url(self):
+		return reverse('article-detail', args=[self.article_slug])
 
 	def __str__(self):
 		return self.article_name
