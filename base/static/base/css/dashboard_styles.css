@@ -9,6 +9,13 @@
     color: #303030;
 }
 
+#content h1 .span-title {
+    font-size: .8em;
+    font-weight: 400;
+    color: #303030;
+    text-shadow: none !important;
+}
+
 #content p {
     font-family: Lato, sans-serif;
     font-size: 1.1em;
@@ -106,7 +113,7 @@ a:focus {
 
 #sidebar ul.components {
     padding: 20px 0;
-    border-bottom: 1px solid #9fff00;
+    /*border-bottom: 1px solid #9fff00;*/
 }
 
 #sidebar ul p {
