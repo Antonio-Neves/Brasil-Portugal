@@ -1,0 +1,40 @@
+{% load static %}
+<!-- Sidebar  -->
+<nav id="sidebar">
+    <!-- Brand -->
+    <div class="sidebar-header">
+        <a href="{% url 'index' %}">
+            <img class="logo mr-1" src="{% static 'base/images/icon_nav_portugal.png' %}" alt="Brasil Portugal">
+            <span>Do Brasil para Portugal</span>
+        </a>
+    </div>
+    <!-- Nav SideBar -->
+    <ul class="list-unstyled components" id="accordionSidebar">
+        <!-- Categories -->
+        {% for global_category in global_categories %}
+            <li class="">
+                <a href="#{{ global_category.category_slug }}" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">{{ global_category }}</a>
+                <ul class="collapse submenu-list list-unstyled" id="{{ global_category.category_slug }}" data-parent="#accordionSidebar">
+                    <!-- Sub Categories -->
+                    {% for global_subcategory in global_subcategories %}
+                        {% if global_subcategory.sub_category_category == global_category %}
+                            <li>
+                                <a href="#{{ global_subcategory.sub_category_slug }}" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">{{ global_subcategory }}</a>
+                                <ul class="collapse submenu2-list list-unstyled" id="{{ global_subcategory.sub_category_slug }}" data-parent="#{{ global_category.category_slug }}">
+                                    <!-- Articles -->
+                                    {% for global_article in global_articles %}
+                                        {% if global_article.article_cat == global_subcategory %}
+                                            <li>
+                                                <a href="{{ global_article.get_absolute_url }}">{{ global_article }}</a>
+                                            </li>
+                                        {% endif %}
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </li>
+        {% endfor %}
+    </ul>
+</nav>
