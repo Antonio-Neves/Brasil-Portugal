@@ -1,35 +1,31 @@
 from django.shortcuts import render
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, DetailView
 
 from principal.models import Category, SubCategory, Article
 
 
-def global_principal_content(request):
-	"""
-	Return context for use in all templates.
-	"""
-	global_principal_context = {
-		'global_categories': Category.objects.all(),
-		'global_subcategories': SubCategory.objects.all(),
-		'global_articles': Article.objects.all()
-	}
-
-	return global_principal_context
-
-
+# --- Home Page --- #
 class IndexView(TemplateView):
-
-	def get(self, request, *args, **kwargs):
-		context = {
-			'categories': Category.objects.all(),
-			'subcategories': SubCategory.objects.all(),
-			'articles': Article.objects.all()
-		}
-
-		return render(request, 'principal/index.html', context)
+	template_name = 'principal/index.html'
 
 
-def content(request):
+# --- Categories --- #
+class CategoryDetailView(DetailView):
+	model = Category
+	slug_field = 'category_slug'
+	template_name = 'principal/category-detail.html'
 
-	return render(request, 'principal/content.html')
 
+# --- SubCategories --- #
+class SubCategoryDetailView(DetailView):
+	model = SubCategory
+	slug_field = 'sub_category_slug'
+	template_name = 'principal/subcategory-detail.html'
+
+
+# --- Articles --- #
+class ArticleDetailView(DetailView):
+	model = Article
+	slug_field = 'article_slug'
+	template_name = 'principal/article-detail.html'
+	# context_object_name = 'article'
