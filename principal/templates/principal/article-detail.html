@@ -1,0 +1,26 @@
+{% extends 'base/_base_index.html' %}
+{% block title %}{{ object.article_name }}{% endblock %}
+{% block body_content %}
+{% load static %}
+<div class="wrapper">
+    <!-- Sidebar  -->
+    {% include 'base/_base_sidebar_normal.html' %}
+    <!-- Page Content  -->
+    <div id="content">
+        <!-- Content NavBar  -->
+        <nav class="navbar navbar-expand-lg navbar-light navbar-content">
+            <div class="container-fluid d-flex justify-content-start">
+                <button type="button" id="sidebarCollapse" class="btn btn-info">
+                    <i class="fas fa-align-left"></i>
+                </button>
+                <h1 class="ml-4">{{ object.article_cat }} - <span class="span-title">{{ object.article_name }}</span></h1>
+            </div>
+            <div class="container-fluid d-flex justify-content-end">
+                <a class="a-inicio" href="{% url 'index' %}">Início</a>
+            </div>
+        </nav>
+        <!-- Main Content -->
+        {{ object.article_content | safe }}
+    </div>
+</div>
+{% endblock %}
