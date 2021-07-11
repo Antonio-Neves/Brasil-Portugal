@@ -1,0 +1,34 @@
+{% extends 'base/_base_index.html' %}
+{% block title %}{{ object.category_name }}{% endblock %}
+{% block body_content %}
+{% load static %}
+<div class="wrapper">
+    <!-- Sidebar  -->
+    {% include 'base/_base_sidebar_normal.html' %}
+    <!-- Page Content  -->
+    <div id="content">
+        <!-- Content NavBar  -->
+        <nav class="navbar navbar-expand-lg navbar-light navbar-content">
+            <div class="container-fluid d-flex justify-content-start">
+                <button type="button" id="sidebarCollapse" class="btn btn-info">
+                    <i class="fas fa-align-left"></i>
+                </button>
+                <h1 class="ml-4">{{ object.sub_category_name }}</h1>
+            </div>
+            <div class="container-fluid d-flex justify-content-end">
+                <a class="a-inicio" href="{% url 'index' %}">Início</a>
+            </div>
+        </nav>
+        <!-- Main Content -->
+        <div class="row justify-content-md-center">
+            {% for article in global_articles %}
+                {% if article.article_cat == object %}
+                    <div class="col-xl-4 col-secondary">
+                        <a href="{{ article.get_absolute_url }}">{{ article.article_name }}</a>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
