@@ -13,14 +13,17 @@
                 <button type="button" id="sidebarCollapse" class="btn btn-info">
                     <i class="fas fa-align-left"></i>
                 </button>
-                <h1 class="ml-4">{{ object.article_cat }} - <span class="span-title">{{ object.article_name }}</span></h1>
+                <h1 class="ml-4">{{ object.article_name }}</h1>
             </div>
             <div class="container-fluid d-flex justify-content-end">
+                <a class="a-inicio mr-3" href="{% url 'index' %}">{{ object.article_cat }}</a>
                 <a class="a-inicio" href="{% url 'index' %}">Início</a>
             </div>
         </nav>
         <!-- Main Content -->
-        {{ object.article_content | safe }}
+        <div class="article-content">
+            {{ object.article_content | safe }}
+        </div>
     </div>
 </div>
 {% endblock %}
